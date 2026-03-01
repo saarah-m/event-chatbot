@@ -1,0 +1,29 @@
+event-planner-chatbot/
+│
+├── frontend/
+│   ├── index.html
+│   ├── chat-widget.js
+│   └── styles.css
+│
+├── backend/
+│   ├── server.js
+│   ├── ai/
+│   │   ├── agent.js
+│   │   ├── systemPrompt.js
+│   │   └── toolDefinitions.js
+│   │
+│   └── tools/
+│       └── toolRouter.js          ✅ done
+│
+├── calculator/                     ← NEW dedicated folder
+│   └── api.py                     ✅ done  (your FastAPI wrapper)
+│
+├── config/
+│   └── .env
+│
+├── tests/
+│   ├── tools.test.js
+│   └── agent.test.js
+│
+├── package.json
+└── README.md
