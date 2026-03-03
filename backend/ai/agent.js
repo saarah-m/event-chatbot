@@ -10,7 +10,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 async function runAgent(userMessage, conversationHistory) {
 
     const model = genAI.getGenerativeModel({
-        model: "gemini-2.0-flash-lite",    
+        model: "gemini-2.5-flash-lite",    
         systemInstruction: systemPrompt,
         tools: [{
             functionDeclarations: tools   // ← Gemini wraps tools differently
