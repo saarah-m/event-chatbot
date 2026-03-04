@@ -11,3 +11,4 @@ async function routeTool(toolName, toolArgs) {
         return data.result;
     }
 }
+module.exports = { routeTool };

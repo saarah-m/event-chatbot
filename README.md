@@ -1,11 +1,10 @@
-# 🎪 Version One of Event-Chatbot AI
+# 🎪 Event Planner AI Chatbot
 
 > A conversational AI assistant that helps event planners calculate guest capacity, table configurations, and room layouts — powered by Google Gemini and a custom Python calculator API.
 
-
 ---
 
-# Ideal End Product
+## 📐 What It Does
 
 Instead of manually inputting numbers into a calculator, users can simply *talk* to the assistant:
 
@@ -15,25 +14,19 @@ The AI understands the request, calls the calculator in the background, and resp
 
 ---
 
-## Current TO-DO
-
-* Currently working with a mathematical logic calculator (rather than event based one), needs to be fixed 
-* Frontend UI needs to be updated 
-* Needs to be styled 
-* If testing with mathemaic logic: need to replace event prompts and function 
-* If testing with event planning logic: need to replace mathematical logic
-
-
-
 ## 🗂 Project Structure
 
 ```
 event-planner-chatbot/
 │
-├── frontend/
-│   ├── index.html          # Chat UI shell
-│   ├── chat-widget.js      # Sends/receives messages, renders chat bubbles
-│   └── styles.css          # Chat widget styling
+├── frontend/                   # React/Vite app
+│   ├── src/
+│   │   ├── App.jsx             # Root component — mounts ChatWidget
+│   │   ├── ChatWidget.jsx      # Chat UI — messages, input, suggestion chips
+│   │   └── index.css           # Global reset (overflow, box-sizing, full height)
+│   ├── index.html
+│   ├── package.json            # Separate from backend's package.json
+│   └── vite.config.js
 │
 ├── backend/
 │   ├── server.js           # Express server — receives messages from frontend
@@ -121,6 +114,12 @@ cd backend
 npm install
 ```
 
+**React (frontend):**
+```bash
+cd frontend
+npm install
+```
+
 ### 4. Run the project
 
 You'll need **three terminal windows** running simultaneously:
@@ -128,7 +127,7 @@ You'll need **three terminal windows** running simultaneously:
 **Terminal 1 — Calculator API:**
 ```bash
 cd calculator
-uvicorn api:app --reload
+python3 -m uvicorn api:app --reload
 # runs on http://localhost:8000
 ```
 
@@ -141,8 +140,9 @@ node server.js
 
 **Terminal 3 — Frontend:**
 ```bash
-open frontend/index.html
-# or: npx serve frontend
+cd frontend
+npm run dev
+# opens on http://localhost:5173
 ```
 
 ---
@@ -151,14 +151,21 @@ open frontend/index.html
 
 ### Test the calculator API directly:
 ```bash
-curl -X POST http://localhost:8000/calculate \
+curl -X POST http://localhost:8000/calculate-set \
   -H "Content-Type: application/json" \
-  -d '{"expression": "2+2"}'
+  -d '{"length_ft": 40, "width_ft": 60, "set_type": "round_72"}'
 ```
 
 Expected response:
 ```json
-{ "expression": "2+2", "result": 4.0 }
+{
+  "set_type": "round_72",
+  "label": "72\" Round",
+  "room_sqft": 2400.0,
+  "tables_that_fit": 63,
+  "seats_per_table": 10,
+  "total_guests": 630
+}
 ```
 
 ### Test the chatbot backend directly:
@@ -186,3 +193,24 @@ Expected response:
 | Environment | dotenv |
 
 ---
+
+## 🔒 Security Notes
+
+- Never commit your `config/.env` file — it's listed in `.gitignore`
+- The calculator uses `eval()` internally which is safe for internal use, but **do not expose the calculator API publicly** without replacing `eval()` with a safe math parser like `asteval`
+
+---
+
+## 📈 Potential Improvements
+
+- Replace `eval()` with `asteval` or `sympy` for safer math parsing
+- Add persistent conversation storage (currently in-memory only)
+- Add user authentication
+- Deploy calculator API and backend as separate services
+- Add more tools (e.g. room layout visualizer, cost estimator)
+
+---
+
+## 📄 License
+
+MIT
