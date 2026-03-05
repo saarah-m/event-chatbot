@@ -26,9 +26,9 @@ function Message({ msg }) {
     <div style={{ ...styles.messageRow, justifyContent: isUser ? "flex-end" : "flex-start" }}>
       {!isUser && (
         <div style={styles.avatar}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-              stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       )}
@@ -96,22 +96,20 @@ export default function ChatWidget() {
     <>
       <style>{keyframes}</style>
       <div style={styles.page} className="chat-page">
-        {/* Background texture */}
-        <div style={styles.bgGradient} />
-
         <div style={styles.container} className="chat-container">
+
           {/* Header */}
           <div style={styles.header}>
             <div style={styles.headerLeft}>
               <div style={styles.logoMark}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-                    stroke="#C9A84C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
               <div>
-                <div style={styles.headerTitle}>Event Space Assistant</div>
-                <div style={styles.headerSubtitle}>Capacity & Layout Calculator</div>
+                <div style={styles.headerTitle}>EVENT Toolkit Assistant</div>
+                <div style={styles.headerSubtitle}>SETS CALCULATOR · AI POWERED</div>
               </div>
             </div>
             <div style={styles.statusPill}>
@@ -133,7 +131,10 @@ export default function ChatWidget() {
           {messages.filter((m) => m.role === "user").length === 0 && (
             <div style={styles.suggestions}>
               {SUGGESTIONS.map((s, i) => (
-                <button key={i} style={styles.suggestionBtn} onClick={() => sendMessage(s)}>
+                <button key={i} style={styles.suggestionBtn}
+                  onMouseEnter={e => e.currentTarget.style.background = "#FDFDE0"}
+                  onMouseLeave={e => e.currentTarget.style.background = "#fff"}
+                  onClick={() => sendMessage(s)}>
                   {s}
                 </button>
               ))}
@@ -154,15 +155,17 @@ export default function ChatWidget() {
             <button
               onClick={() => sendMessage()}
               disabled={!input.trim() || loading}
+              onMouseEnter={e => { if (input.trim() && !loading) e.currentTarget.style.background = "#EEEE00" }}
+              onMouseLeave={e => { if (input.trim() && !loading) e.currentTarget.style.background = "#F5F700" }}
               style={{
                 ...styles.sendBtn,
-                opacity: !input.trim() || loading ? 0.4 : 1,
+                opacity: !input.trim() || loading ? 0.35 : 1,
                 cursor: !input.trim() || loading ? "not-allowed" : "pointer",
               }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z"
-                  stroke="#0B1628" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           </div>
@@ -179,44 +182,36 @@ const styles = {
   page: {
     height: "100vh",
     width: "100%",
-    background: "#0B1628",
+    background: "#F0F0EE",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontFamily: "'Georgia', 'Times New Roman', serif",
+    fontFamily: "'Helvetica Neue', 'Arial', sans-serif",
     padding: "24px",
     position: "relative",
     overflow: "hidden",
-  },
-  bgGradient: {
-    position: "absolute",
-    inset: 0,
-    background:
-      "radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.07) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.05) 0%, transparent 50%)",
-    pointerEvents: "none",
   },
   container: {
     width: "100%",
     maxWidth: "680px",
     height: "calc(100vh - 48px)",
     maxHeight: "860px",
-    background: "rgba(255,255,255,0.03)",
-    border: "1px solid rgba(201,168,76,0.2)",
-    borderRadius: "16px",
+    background: "#FFFFFF",
+    border: "1.5px solid #D0D0CC",
+    borderRadius: "8px",
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
-    backdropFilter: "blur(12px)",
-    boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.1)",
-    animation: "fadeSlideIn 0.5s ease forwards",
+    boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
+    animation: "fadeSlideIn 0.4s ease forwards",
   },
   header: {
-    padding: "20px 24px",
-    borderBottom: "1px solid rgba(201,168,76,0.15)",
+    padding: "18px 24px",
+    borderBottom: "1px solid #E8E8E4",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    background: "rgba(201,168,76,0.04)",
+    background: "#fff",
   },
   headerLeft: {
     display: "flex",
@@ -224,25 +219,27 @@ const styles = {
     gap: "12px",
   },
   logoMark: {
-    width: "38px",
-    height: "38px",
-    borderRadius: "10px",
-    background: "rgba(201,168,76,0.1)",
-    border: "1px solid rgba(201,168,76,0.3)",
+    width: "36px",
+    height: "36px",
+    borderRadius: "8px",
+    background: "#F5F700",
+    border: "1px solid #E0E000",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flexShrink: 0,
   },
   headerTitle: {
-    color: "#F0E6C8",
-    fontSize: "15px",
-    fontWeight: "600",
-    letterSpacing: "0.02em",
+    color: "#111",
+    fontSize: "14px",
+    fontWeight: "700",
+    letterSpacing: "0.01em",
   },
   headerSubtitle: {
-    color: "rgba(201,168,76,0.7)",
-    fontSize: "11px",
-    letterSpacing: "0.08em",
+    color: "#888",
+    fontSize: "10px",
+    fontWeight: "500",
+    letterSpacing: "0.1em",
     textTransform: "uppercase",
     marginTop: "2px",
   },
@@ -250,19 +247,20 @@ const styles = {
     display: "flex",
     alignItems: "center",
     gap: "6px",
-    background: "rgba(34,197,94,0.08)",
-    border: "1px solid rgba(34,197,94,0.2)",
+    background: "#F7F7F5",
+    border: "1px solid #E0E0DC",
     borderRadius: "20px",
     padding: "4px 10px",
     fontSize: "11px",
-    color: "rgba(134,239,172,0.9)",
-    letterSpacing: "0.05em",
+    fontWeight: "500",
+    color: "#555",
+    letterSpacing: "0.04em",
   },
   statusDot: {
     width: "6px",
     height: "6px",
     borderRadius: "50%",
-    background: "#4ade80",
+    background: "#22c55e",
     animation: "pulse 2s infinite",
   },
   messagesArea: {
@@ -271,20 +269,21 @@ const styles = {
     padding: "24px",
     display: "flex",
     flexDirection: "column",
-    gap: "16px",
+    gap: "14px",
+    background: "#FAFAF8",
   },
   messageRow: {
     display: "flex",
     alignItems: "flex-end",
     gap: "8px",
-    animation: "messageIn 0.3s ease forwards",
+    animation: "messageIn 0.25s ease forwards",
   },
   avatar: {
-    width: "30px",
-    height: "30px",
-    borderRadius: "8px",
-    background: "rgba(201,168,76,0.08)",
-    border: "1px solid rgba(201,168,76,0.2)",
+    width: "28px",
+    height: "28px",
+    borderRadius: "6px",
+    background: "#F5F700",
+    border: "1px solid #E0E000",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -292,24 +291,24 @@ const styles = {
   },
   bubble: {
     maxWidth: "75%",
-    padding: "12px 16px",
-    borderRadius: "14px",
+    padding: "11px 15px",
     fontSize: "14px",
     lineHeight: "1.6",
     letterSpacing: "0.01em",
   },
   userBubble: {
-    background: "linear-gradient(135deg, #C9A84C, #A8863C)",
-    color: "#0B1628",
-    borderBottomRightRadius: "4px",
-    fontFamily: "'Georgia', serif",
-    fontWeight: "500",
+    background: "#1A1A1A",
+    color: "#fff",
+    borderRadius: "12px",
+    fontWeight: "400",
+    borderBottomRightRadius: "3px",
   },
   assistantBubble: {
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(201,168,76,0.15)",
-    color: "#E8DFC8",
-    borderBottomLeftRadius: "4px",
+    background: "#fff",
+    border: "1px solid #E8E8E4",
+    color: "#222",
+    borderRadius: "12px",
+    borderBottomLeftRadius: "3px",
   },
   typingWrapper: {
     display: "flex",
@@ -317,11 +316,11 @@ const styles = {
     gap: "8px",
   },
   typingBubble: {
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(201,168,76,0.15)",
-    borderRadius: "14px",
-    borderBottomLeftRadius: "4px",
-    padding: "14px 18px",
+    background: "#fff",
+    border: "1px solid #E8E8E4",
+    borderRadius: "12px",
+    borderBottomLeftRadius: "3px",
+    padding: "13px 16px",
     display: "flex",
     gap: "5px",
     alignItems: "center",
@@ -331,68 +330,72 @@ const styles = {
     width: "6px",
     height: "6px",
     borderRadius: "50%",
-    background: "#C9A84C",
+    background: "#aaa",
     animation: "dotBounce 1.2s infinite ease-in-out",
   },
   suggestions: {
-    padding: "0 24px 16px",
+    padding: "12px 24px 16px",
     display: "flex",
     flexDirection: "column",
-    gap: "8px",
+    gap: "7px",
+    borderTop: "1px solid #EFEFEB",
+    background: "#FAFAF8",
   },
   suggestionBtn: {
-    background: "rgba(201,168,76,0.06)",
-    border: "1px solid rgba(201,168,76,0.2)",
-    borderRadius: "10px",
-    color: "rgba(201,168,76,0.85)",
+    background: "#fff",
+    border: "1px solid #E0E0DC",
+    borderRadius: "8px",
+    color: "#333",
     fontSize: "12.5px",
+    fontWeight: "400",
     padding: "10px 14px",
     textAlign: "left",
     cursor: "pointer",
-    transition: "all 0.2s ease",
-    fontFamily: "'Georgia', serif",
+    transition: "all 0.15s ease",
+    fontFamily: "'Helvetica Neue', Arial, sans-serif",
     letterSpacing: "0.01em",
   },
   inputRow: {
-    padding: "16px 20px",
-    borderTop: "1px solid rgba(201,168,76,0.12)",
+    padding: "14px 18px",
+    borderTop: "1px solid #E8E8E4",
     display: "flex",
     gap: "10px",
     alignItems: "flex-end",
-    background: "rgba(0,0,0,0.2)",
+    background: "#fff",
   },
   textarea: {
     flex: 1,
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(201,168,76,0.2)",
-    borderRadius: "10px",
-    color: "#F0E6C8",
+    background: "#F7F7F5",
+    border: "1px solid #E0E0DC",
+    borderRadius: "8px",
+    color: "#111",
     fontSize: "14px",
-    padding: "12px 14px",
+    padding: "11px 13px",
     resize: "none",
     outline: "none",
-    fontFamily: "'Georgia', serif",
+    fontFamily: "'Helvetica Neue', Arial, sans-serif",
     lineHeight: "1.5",
-    transition: "border-color 0.2s",
+    transition: "border-color 0.15s",
   },
   sendBtn: {
     width: "42px",
     height: "42px",
-    borderRadius: "10px",
-    background: "linear-gradient(135deg, #C9A84C, #A8863C)",
-    border: "none",
+    borderRadius: "8px",
+    background: "#F5F700",
+    border: "1px solid #E0E000",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    transition: "all 0.2s ease",
+    transition: "background 0.15s ease",
     flexShrink: 0,
   },
   footer: {
     textAlign: "center",
-    fontSize: "10.5px",
-    color: "rgba(201,168,76,0.3)",
-    padding: "8px",
-    letterSpacing: "0.05em",
+    fontSize: "10px",
+    color: "#bbb",
+    padding: "6px",
+    letterSpacing: "0.04em",
+    background: "#fff",
   },
 };
 
@@ -406,35 +409,29 @@ const keyframes = `
   }
 
   @keyframes fadeSlideIn {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   @keyframes messageIn {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   @keyframes dotBounce {
-    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-    40%           { transform: translateY(-6px); opacity: 1; }
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.3; }
+    40%           { transform: translateY(-5px); opacity: 1; }
   }
   @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50%       { opacity: 0.4; }
+    50%       { opacity: 0.3; }
   }
   textarea:focus {
-    border-color: rgba(201,168,76,0.5) !important;
+    border-color: #000 !important;
+    background: #fff !important;
   }
   textarea::placeholder {
-    color: rgba(201,168,76,0.3);
-  }
-  button[style*="cursor: pointer"]:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+    color: #aaa;
   }
 
-  /* ── Responsive breakpoints ── */
-
-  /* Large screens: centered card with breathing room */
   @media (min-width: 900px) {
     .chat-page    { padding: 40px !important; }
     .chat-container {
@@ -443,8 +440,6 @@ const keyframes = `
       max-height: 860px !important;
     }
   }
-
-  /* Medium screens: comfortable full-height card */
   @media (min-width: 600px) and (max-width: 899px) {
     .chat-page    { padding: 24px !important; align-items: flex-start !important; }
     .chat-container {
@@ -452,8 +447,6 @@ const keyframes = `
       height: calc(100vh - 48px) !important;
     }
   }
-
-  /* Mobile: edge-to-edge, full height */
   @media (max-width: 599px) {
     .chat-page {
       padding: 0 !important;
@@ -466,6 +459,7 @@ const keyframes = `
       border-radius: 0 !important;
       border-left: none !important;
       border-right: none !important;
+      box-shadow: none !important;
     }
   }
 `;
