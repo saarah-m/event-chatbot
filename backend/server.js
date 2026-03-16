@@ -28,5 +28,18 @@ app.post("/api/chat", async (req, res) => {
     }
 });
 
+const path = require("path");
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+//needed for deploying a demo version 
+
+// Serve the React frontend
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+// Handle any other route by returning the React app
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+});
+
+app.listen(process.env.PORT || 3000, () => 
+    console.log(`Server running on port ${process.env.PORT || 3000}`)
+);
