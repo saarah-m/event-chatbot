@@ -2,7 +2,7 @@
 
 async function routeTool(toolName, toolArgs) {
     if (toolName === "calculate") {
-        const response = await fetch("http://localhost:8000/calculate", {
+        const response = await fetch(`${CALCULATOR_URL}/calculate-set`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ expression: toolArgs.expression })  // ← dynamic, from the AI
