@@ -1,5 +1,7 @@
 // agent.js
-require("dotenv").config({ path: "../../config/.env" });
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config({ path: "../config/.env" });
+}
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const tools = require("./toolDefinitions");
 const systemPrompt = require("./systemPrompt");

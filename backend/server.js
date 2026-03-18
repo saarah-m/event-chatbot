@@ -1,4 +1,6 @@
-require("dotenv").config({ path: "../config/.env" });
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config({ path: "../config/.env" });
+}
 const express = require("express");
 const cors = require("cors");          // ← just once up here
 const { runAgent } = require("./ai/agent");
