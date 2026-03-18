@@ -1,5 +1,7 @@
 // toolRouter.js
 
+const CALCULATOR_URL = process.env.CALCULATOR_URL; 
+
 async function routeTool(toolName, toolArgs) {
     if (toolName === "calculate") {
         const response = await fetch(`${CALCULATOR_URL}/calculate-set`, {
