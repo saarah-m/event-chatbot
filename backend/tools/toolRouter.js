@@ -1,6 +1,6 @@
 // toolRouter.js
 
-const CALCULATOR_URL = process.env.CALCULATOR_URL; 
+const CALCULATOR_URL = process.env.CALCULATOR_URL.API; 
 
 async function routeTool(toolName, toolArgs) {
     if (toolName === "calculate") {
