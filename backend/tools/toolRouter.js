@@ -1,6 +1,6 @@
 // toolRouter.js
 
-const CALCULATOR_URL = process.env.CALCULATOR_URL.API; 
+const CALCULATOR_URL = process.env.CALCULATOR_API_URL || "http://localhost:8000";
 
 async function routeTool(toolName, toolArgs) {
     if (toolName === "calculate") {
